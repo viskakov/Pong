@@ -25,4 +25,15 @@ public class Ball : MonoBehaviour
         direction.y = Random.Range(-_angle, _angle);
         _rigidbody2D.velocity = direction * _moveSpeed;
     }
+
+    private void ResetPosition()
+    {
+        _rigidbody2D.position = Vector2.zero;
+    }
+
+    private void OnBecameInvisible()
+    {
+        ResetPosition();
+        InitPush();
+    }
 }
