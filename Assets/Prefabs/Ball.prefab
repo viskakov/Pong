@@ -98,7 +98,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &4979928408823374581
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _angle: 0.67
 --- !u!96 &6109942825183069841
 TrailRenderer:
   serializedVersion: 2

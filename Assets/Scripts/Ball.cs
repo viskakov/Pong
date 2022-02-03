@@ -5,24 +5,28 @@ using Random = UnityEngine.Random;
 public class Ball : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _angle = 0.67f;
 
     private Rigidbody2D _rigidbody2D;
+    private Transform _transform;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _transform = transform;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
-        InitPush();
+        LoadColor();
+        Push();
     }
 
-    private void InitPush()
+    private void Push()
     {
-        var direction = Random.value < 0.5f ? Vector2.left : Vector2.right;
-        direction.y = Random.Range(-_angle, _angle);
+        var direction = Random.value < 0.5f ? Vector2.down : Vector2.up;
+        direction.x = Random.insideUnitCircle.x;
         _rigidbody2D.velocity = direction * _moveSpeed;
     }
 
@@ -31,9 +35,27 @@ public class Ball : MonoBehaviour
         _rigidbody2D.position = Vector2.zero;
     }
 
+    private void RandomizeBall()
+    {
+        _moveSpeed = Random.Range(8f, 12f);
+        _transform.localScale = Vector3.one * Mathf.Clamp(Random.value, 0.5f, 1.1f);
+    }
+
+    private void LoadColor()
+    {
+        if (!PlayerPrefs.HasKey("BallColor")) return;
+
+        var stringColor = "#" + PlayerPrefs.GetString("BallColor");
+        if (ColorUtility.TryParseHtmlString(stringColor, out var color))
+        {
+            _spriteRenderer.color = color;
+        }
+    }
+
     private void OnBecameInvisible()
     {
         ResetPosition();
-        InitPush();
+        RandomizeBall();
+        Push();
     }
 }

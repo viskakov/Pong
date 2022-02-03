@@ -45,6 +45,14 @@ public class ColorPicker : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _onColorSelectedEvent?.Invoke(newColor);
+            SaveColor(newColor);
         }
+    }
+
+    private void SaveColor(Color color)
+    {
+        var stringColor = ColorUtility.ToHtmlStringRGB(color);
+        PlayerPrefs.SetString("BallColor", stringColor);
+        PlayerPrefs.Save();
     }
 }
