@@ -3,24 +3,34 @@ using UnityEngine.UI;
 
 public class ColorPicker : MonoBehaviour
 {
+    [SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private Image _pickerImage;
     [SerializeField] private Image _colorPreview;
+    [SerializeField] private Button _resumeButton;
     [SerializeField] private ColorEvent _onColorPreviewEvent;
     [SerializeField] private ColorEvent _onColorSelectedEvent;
-    
-    private RectTransform _rectTransform;
+
+    private bool _windowState;
     private Texture2D _texture2D;
+    private Color _selectedColor;
 
     private void Awake()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _texture2D = GetComponent<Image>().mainTexture as Texture2D;
+        _texture2D = _pickerImage.mainTexture as Texture2D;
+        _windowState = transform.parent.gameObject.activeSelf;
+        _resumeButton.onClick.AddListener(SwitchPanel);
+    }
+
+    private void OnDestroy()
+    {
+        _resumeButton.onClick.RemoveAllListeners();
     }
 
     private void Update()
     {
         if (!RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, Input.mousePosition))
         {
-            _colorPreview.color = Color.white;
+            _colorPreview.color = _selectedColor;
             return;
         }
 
@@ -38,15 +48,21 @@ public class ColorPicker : MonoBehaviour
         var textureX = Mathf.RoundToInt(x * _texture2D.width);
         var textureY = Mathf.RoundToInt(y * _texture2D.height);
 
-        var newColor = _texture2D.GetPixel(textureX, textureY);
+        _selectedColor = _texture2D.GetPixel(textureX, textureY);
 
-        _onColorPreviewEvent?.Invoke(newColor);
+        _onColorPreviewEvent?.Invoke(_selectedColor);
 
         if (Input.GetMouseButtonDown(0))
         {
-            _onColorSelectedEvent?.Invoke(newColor);
-            SaveColor(newColor);
+            _onColorSelectedEvent?.Invoke(_selectedColor);
+            SaveColor(_selectedColor);
         }
+    }
+
+    public void SwitchPanel()
+    {
+        _windowState = !_windowState;
+        gameObject.SetActive(_windowState);
     }
 
     private void SaveColor(Color color)
