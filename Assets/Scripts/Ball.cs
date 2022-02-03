@@ -19,8 +19,13 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        LoadColor();
+        UpdateColor();
         Push();
+    }
+
+    private void UpdateColor()
+    {
+        _spriteRenderer.color = PlayerSettings.LoadColor();
     }
 
     private void Push()
@@ -40,17 +45,6 @@ public class Ball : MonoBehaviour
     {
         _moveSpeed = Random.Range(8f, 12f);
         _transform.localScale = Vector3.one * Mathf.Clamp(Random.value, 0.5f, 1.1f);
-    }
-
-    private void LoadColor()
-    {
-        if (!PlayerPrefs.HasKey("BallColor")) return;
-
-        var stringColor = "#" + PlayerPrefs.GetString("BallColor");
-        if (ColorUtility.TryParseHtmlString(stringColor, out var color))
-        {
-            _spriteRenderer.color = color;
-        }
     }
 
     private void OnBecameInvisible()

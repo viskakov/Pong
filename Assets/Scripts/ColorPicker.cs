@@ -23,7 +23,7 @@ public class ColorPicker : MonoBehaviour
 
     private void OnDestroy()
     {
-        _resumeButton.onClick.RemoveAllListeners();
+        _resumeButton.onClick.RemoveListener(SwitchPanel);
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class ColorPicker : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _onColorSelectedEvent?.Invoke(_selectedColor);
-            SaveColor(_selectedColor);
+            PlayerSettings.SaveColor(_selectedColor);
         }
     }
 
@@ -63,12 +63,14 @@ public class ColorPicker : MonoBehaviour
     {
         _windowState = !_windowState;
         gameObject.SetActive(_windowState);
-    }
 
-    private void SaveColor(Color color)
-    {
-        var stringColor = ColorUtility.ToHtmlStringRGB(color);
-        PlayerPrefs.SetString("BallColor", stringColor);
-        PlayerPrefs.Save();
+        if (_windowState)
+        {
+            PauseManager.Pause();
+        }
+        else
+        {
+            PauseManager.Resume();
+        }
     }
 }

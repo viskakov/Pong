@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _menuButton.onClick.RemoveAllListeners();
+        _menuButton.onClick.RemoveListener(_colorPicker.SwitchPanel);
     }
 
     private void Update()
