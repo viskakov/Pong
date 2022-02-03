@@ -30,9 +30,10 @@ public class Ball : MonoBehaviour
         _rigidbody2D.velocity = direction * _moveSpeed;
     }
 
-    private void ResetPosition()
+    private void ResetBall()
     {
         _rigidbody2D.position = Vector2.zero;
+        _rigidbody2D.velocity = Vector2.zero;
     }
 
     private void RandomizeBall()
@@ -54,7 +55,7 @@ public class Ball : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        ResetPosition();
+        ResetBall();
         RandomizeBall();
         Push();
     }
