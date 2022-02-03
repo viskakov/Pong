@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -5,6 +6,8 @@ using Random = UnityEngine.Random;
 public class Ball : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+
+    public static event Action OutOfScreenEvent;
 
     private Rigidbody2D _rigidbody2D;
     private Transform _transform;
@@ -49,6 +52,7 @@ public class Ball : MonoBehaviour
 
     private void OnBecameInvisible()
     {
+        OutOfScreenEvent?.Invoke();
         ResetBall();
         RandomizeBall();
         Push();
