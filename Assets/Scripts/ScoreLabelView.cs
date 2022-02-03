@@ -6,26 +6,34 @@ namespace Pong
     public class ScoreLabelView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _scoreLabel;
-    
+        [SerializeField] private TextMeshProUGUI _currentScoreLabel;
+
         private void Start()
         {
-            var bestScore = ScoreManager.BestScore;
-            SetBestScoreLabel(bestScore);
+            UpdateBestScoreLabel(ScoreManager.BestScore);
+            UpdateCurrentScoreLabel(ScoreManager.CurrentScore);
         }
 
         private void OnEnable()
         {
-            ScoreManager.OnBestScoreChangedEvent += SetBestScoreLabel;
+            ScoreManager.OnBestScoreChangedEvent += UpdateBestScoreLabel;
+            ScoreManager.OnCurrentScoreChangedEvent += UpdateCurrentScoreLabel;
         }
 
         private void OnDisable()
         {
-            ScoreManager.OnBestScoreChangedEvent -= SetBestScoreLabel;
+            ScoreManager.OnBestScoreChangedEvent -= UpdateBestScoreLabel;
+            ScoreManager.OnCurrentScoreChangedEvent -= UpdateCurrentScoreLabel;
         }
     
-        private void SetBestScoreLabel(int value)
+        private void UpdateBestScoreLabel(int value)
         {
             _scoreLabel.SetText($"Best Score: {value}");
+        }
+
+        private void UpdateCurrentScoreLabel(int value)
+        {
+            _currentScoreLabel.SetText($"Current Score: {value}");
         }
     }
 }

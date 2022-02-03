@@ -6,9 +6,9 @@ namespace Pong
     public class ScoreManager : MonoBehaviour
     {
         public static event Action<int> OnBestScoreChangedEvent;
+        public static event Action<int> OnCurrentScoreChangedEvent;
         public static int BestScore { get; private set; }
-
-        private static int _currentScore;
+        public static int CurrentScore { get; private set; }
 
         private void Awake()
         {
@@ -27,11 +27,13 @@ namespace Pong
 
         private static void IncreasedScore()
         {
-            _currentScore++;
-            if (_currentScore > BestScore)
+            CurrentScore++;
+            OnCurrentScoreChangedEvent?.Invoke(CurrentScore);
+
+            if (CurrentScore > BestScore)
             {
-                PlayerSettings.SaveBestScore(_currentScore);
-                OnBestScoreChangedEvent?.Invoke(_currentScore);
+                PlayerSettings.SaveBestScore(CurrentScore);
+                OnBestScoreChangedEvent?.Invoke(CurrentScore);
             }
         }
     }
