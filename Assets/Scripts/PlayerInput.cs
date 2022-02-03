@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
 
     private void KeyboardInput()
     {
-        _direction = new Vector2(Input.GetAxis("Horizontal"), 0f);
+        _direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
     }
 
     private void SwipeInput()
