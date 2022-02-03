@@ -1,4 +1,7 @@
 using UnityEngine.Events;
 
-[System.Serializable]
-public class ColorEvent : UnityEvent<UnityEngine.Color> { }
+namespace Pong
+{
+    [System.Serializable]
+    public class ColorEvent : UnityEvent<UnityEngine.Color> { }
+}

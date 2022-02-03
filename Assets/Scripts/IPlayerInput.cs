@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public interface IPlayerInput
+namespace Pong
 {
-    public Vector2 Direction { get; }
-    public float MoveSpeed { get; }
+    public interface IPlayerInput
+    {
+        public Vector2 Direction { get; }
+        public float MoveSpeed { get; }
+    }
 }

@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class KeyboardInput : MonoBehaviour, IPlayerInput
+namespace Pong
 {
-    public Vector2 Direction { get; private set; }
-    public float MoveSpeed { get; private set; }
-
-    private void Awake()
+    public class KeyboardInput : MonoBehaviour, IPlayerInput
     {
-        MoveSpeed = 15f;
-    }
+        public Vector2 Direction { get; private set; }
+        public float MoveSpeed { get; private set; }
 
-    private void Update()
-    {
-        Direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+        private void Awake()
+        {
+            MoveSpeed = 15f;
+        }
+
+        private void Update()
+        {
+            Direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+        }
     }
 }

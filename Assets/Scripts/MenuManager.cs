@@ -1,26 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+namespace Pong
 {
-    [SerializeField] private ColorPicker _colorPicker;
-    [SerializeField] private Button _menuButton;
-
-    private void Awake()
+    public class MenuManager : MonoBehaviour
     {
-        Application.targetFrameRate = 60;
-        _menuButton.onClick.AddListener(_colorPicker.SwitchPanel);
-    }
+        [SerializeField] private ColorPicker _colorPicker;
+        [SerializeField] private Button _menuButton;
 
-    private void OnDestroy()
-    {
-        _menuButton.onClick.RemoveListener(_colorPicker.SwitchPanel);
-    }
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+            _menuButton.onClick.AddListener(_colorPicker.SwitchPanel);
+        }
 
-    private void Update()
-    {
-        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+        private void OnDestroy()
+        {
+            _menuButton.onClick.RemoveListener(_colorPicker.SwitchPanel);
+        }
 
-        _colorPicker.SwitchPanel();
+        private void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape)) return;
+
+            _colorPicker.SwitchPanel();
+        }
     }
 }

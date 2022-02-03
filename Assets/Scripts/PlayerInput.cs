@@ -1,27 +1,30 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PlayerInput : MonoBehaviour
+namespace Pong
 {
-    private Rigidbody2D _rigidbody2D;
-    private IPlayerInput _playerInput;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class PlayerInput : MonoBehaviour
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        private Rigidbody2D _rigidbody2D;
+        private IPlayerInput _playerInput;
 
-        if (Application.isEditor)
+        private void Awake()
         {
-            _playerInput = gameObject.AddComponent<KeyboardInput>();
-        }
-        else
-        {
-            _playerInput = gameObject.AddComponent<TouchInput>();
-        }
-    }
+            _rigidbody2D = GetComponent<Rigidbody2D>();
 
-    private void FixedUpdate()
-    {
-        _rigidbody2D.MovePosition(_rigidbody2D.position + _playerInput.Direction * (_playerInput.MoveSpeed * Time.deltaTime));
+            if (Application.isEditor)
+            {
+                _playerInput = gameObject.AddComponent<KeyboardInput>();
+            }
+            else
+            {
+                _playerInput = gameObject.AddComponent<TouchInput>();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            _rigidbody2D.MovePosition(_rigidbody2D.position + _playerInput.Direction * (_playerInput.MoveSpeed * Time.deltaTime));
+        }
     }
 }

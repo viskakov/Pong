@@ -1,35 +1,38 @@
 using System;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+namespace Pong
 {
-    public static event Action<int> OnBestScoreChangedEvent;
-    public static int BestScore { get; private set; }
-
-    private static int _currentScore;
-
-    private void Awake()
+    public class ScoreManager : MonoBehaviour
     {
-        BestScore = PlayerSettings.LoadBestScore();
-    }
+        public static event Action<int> OnBestScoreChangedEvent;
+        public static int BestScore { get; private set; }
 
-    private void OnEnable()
-    {
-        Ball.OutOfScreenEvent += IncreasedScore;
-    }
+        private static int _currentScore;
 
-    private void OnDisable()
-    {
-        Ball.OutOfScreenEvent -= IncreasedScore;
-    }
-
-    private static void IncreasedScore()
-    {
-        _currentScore++;
-        if (_currentScore > BestScore)
+        private void Awake()
         {
-            PlayerSettings.SaveBestScore(_currentScore);
-            OnBestScoreChangedEvent?.Invoke(_currentScore);
+            BestScore = PlayerSettings.LoadBestScore();
+        }
+
+        private void OnEnable()
+        {
+            Ball.OutOfScreenEvent += IncreasedScore;
+        }
+
+        private void OnDisable()
+        {
+            Ball.OutOfScreenEvent -= IncreasedScore;
+        }
+
+        private static void IncreasedScore()
+        {
+            _currentScore++;
+            if (_currentScore > BestScore)
+            {
+                PlayerSettings.SaveBestScore(_currentScore);
+                OnBestScoreChangedEvent?.Invoke(_currentScore);
+            }
         }
     }
 }

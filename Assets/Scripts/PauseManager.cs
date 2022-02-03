@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public static class PauseManager
+namespace Pong
 {
-    public static void Pause()
+    public static class PauseManager
     {
-        Time.timeScale = 0f;
-    }
+        public static void Pause()
+        {
+            Time.timeScale = 0f;
+        }
 
-    public static void Resume()
-    {
-        Time.timeScale = 1f;
+        public static void Resume()
+        {
+            Time.timeScale = 1f;
+        }
     }
 }
